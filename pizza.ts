@@ -18,7 +18,7 @@ const menu = [
 ]
 
 let cashInRegister : number = 100
-const orderQueue: object = []
+const orderQueue = []
 let orderId : number = 1
 
 function addNewPizza(pizzaObj: Pizza) {
@@ -38,7 +38,7 @@ function placeOrder(pizzaName: string) {
 }
 
 function completeOrder(orderId : number) {
-    const order  = orderQueue.find(order => order.id === orderId)
+    const order = orderQueue.find(order => order.id === orderId)
     if (order) {
         order.status = "Completed"
         return order
