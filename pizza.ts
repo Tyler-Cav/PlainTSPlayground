@@ -1,16 +1,55 @@
+type Address = {
+    street: string;
+    city: string;
+    country: string;
+}
+
+type Person = {
+    name : string
+    age: number
+    isStudent: boolean
+    address: Address
+}
+
+let persons: Person[] = []
+
+let addressOne: Address = {
+    street: "test3",
+    city: "test4",
+    country: "test5",
+}
+
+let person1: Person = {
+    name: "Tyler",
+    age: 28,
+    isStudent: false,
+    address: addressOne
+}
+
+let person2: Person = {
+    name: "Eliza",
+    age: 27,
+    isStudent: false,
+    address: addressOne
+}
+//
+// persons.push(person1)
+// persons.push(person2)
+// console.log(persons)
+
 type Pizza = {
     name: string,
     price: number
 }
 
-type OrderQueue = {
+type Order = {
     name: string,
-    status: string,
+    pizza: Pizza,
     Id: number
 }
 
 //TESTING from index.js
-const menu = [
+const menu : Pizza[] = [
     { name: "Marg", price: 8},
     { name: "Pep", price: 10},
     { name: "Haw", price: 10},
@@ -26,7 +65,7 @@ function addNewPizza(pizzaObj: Pizza) {
 }
 
 function placeOrder(pizzaName: string) {
-    const selectedPizza = menu.find(pizzaObj => pizzaObj.name === pizzaName)
+    const selectedPizza : Pizza = menu.find(pizzaObj => pizzaObj.name === pizzaName)
     if (selectedPizza !== undefined) {
         cashInRegister += selectedPizza.price
         const newOrder = {pizza: selectedPizza, status: "Ordered", Id: orderId++}
