@@ -32,32 +32,33 @@ let person2: Person = {
     isStudent: false,
     address: addressOne
 }
-//
-// persons.push(person1)
-// persons.push(person2)
-// console.log(persons)
+
+persons.push(person1)
+persons.push(person2)
+console.log(persons)
 
 type Pizza = {
+    id: number,
     name: string,
     price: number
 }
 
-type Order = {
-    name: string,
+type newOrder = {
     pizza: Pizza,
+    status: "Ordered" | "Completed"
     Id: number
 }
 
 //TESTING from index.js
 const menu : Pizza[] = [
-    { name: "Marg", price: 8},
-    { name: "Pep", price: 10},
-    { name: "Haw", price: 10},
-    { name: "Veg", price: 9}
+    { id: 1, name: "Marg", price: 8},
+    { id: 2, name: "Pep", price: 10},
+    { id: 3, name: "Haw", price: 10},
+    { id: 4, name: "Veg", price: 9}
 ]
 
 let cashInRegister : number = 100
-const orderQueue = []
+const orderHistory: newOrder[] = []
 let orderId : number = 1
 
 function addNewPizza(pizzaObj: Pizza) {
@@ -65,30 +66,50 @@ function addNewPizza(pizzaObj: Pizza) {
 }
 
 function placeOrder(pizzaName: string) {
-    const selectedPizza : Pizza = menu.find(pizzaObj => pizzaObj.name === pizzaName)
+    const selectedPizza = menu.find(pizzaObj => pizzaObj.name === pizzaName)
     if (selectedPizza !== undefined) {
         cashInRegister += selectedPizza.price
-        const newOrder = {pizza: selectedPizza, status: "Ordered", Id: orderId++}
-        orderQueue.push(newOrder)
+        const newOrder: newOrder = {pizza: selectedPizza, status: "Ordered", Id: orderId++}
+        orderHistory.push(newOrder)
         return newOrder
-    } else {
+    } else {  
         return "This pizza does not exist"
     }
 }
 
 function completeOrder(orderId : number) {
-    const order = orderQueue.find(order => order.id === orderId)
+    const order = orderHistory.find(order => order.Id === orderId)
     if (order) {
         order.status = "Completed"
         return order
     }
 }
 
-addNewPizza({name: "chick bac ranch", price: 12})
+function getPizzaDetail(identifier: string | number) {
+    if (typeof identifier == "string") {
+        const pizzaInfoObject = menu.find(pizzaObj => pizzaObj.name === identifier)
+        if (pizzaInfoObject) {
+            return pizzaInfoObject
+        } else {
+            return "There is no pizza on the menu with this name"
+        }
+    } else if (typeof identifier == "number"){
+        const pizzaInfoObject = menu.find(pizzaObj => pizzaObj.id === identifier)
+        if (pizzaInfoObject) {
+            return pizzaInfoObject
+        } else {
+            return "There is no pizza on the menu with this ID"
+        }
+    }
+    return "Please provide either a Pizza of Type String or Id of Type Number"
+}
+
+addNewPizza({id: 5,  name: "chick bac ranch", price: 12})
 
 placeOrder("chick bac ranch")
 
 completeOrder(1);
 
-console.log(orderQueue)
+console.log(orderHistory)
 
+console.log(getPizzaDetail(5))
